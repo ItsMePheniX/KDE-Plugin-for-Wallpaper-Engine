@@ -1,0 +1,59 @@
+# Build directories
+build/
+build-*/
+cmake-build-*/
+
+# CMake generated files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+install_manifest.txt
+CTestTestfile.cmake
+Makefile
+*.cmake
+!CMakeLists.txt
+
+# Qt/KDE generated files
+*.moc
+moc_*.cpp
+*_autogen/
+*.qrc.depends
+ui_*.h
+
+# Compiled files
+*.o
+*.so
+*.so.*
+*.a
+*.la
+*.lo
+*.dylib
+*.dll
+*.exe
+
+# IDE and editor files
+.vscode/
+.idea/
+*.pro.user
+*.pro.user.*
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Test binaries
+*_tests
+wallpaperengine_tests
+
+# Qt Creator files
+*.autosave
+
+# Backup files
+*.bak
+*.orig
+
+# Installation prefix files
+prefix.sh
+
+# Log files
+*.log
