@@ -1,4 +1,4 @@
-# Wallpaper Engine KDE Prototype
+# Wallpaper Engine KDE Prototype (WORK IN PROGRESS)
 
 Prototype Plasma 6 wallpaper plugin to load and play Wallpaper Engine *video* wallpapers directly from the Steam workshop directory.
 
