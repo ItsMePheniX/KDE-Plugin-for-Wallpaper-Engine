@@ -1,0 +1,16 @@
+{
+  "KPackageStructure": "Plasma/Wallpaper",
+  "KPlugin": {
+    "Id": "org.kde.wallpaper.wallpaperengine",
+    "Name": "Wallpaper Engine",
+    "Description": "Play Wallpaper Engine video wallpapers (prototype)",
+    "Version": "0.1.0",
+    "License": "GPL-3.0-or-later",
+    "Authors": [ { "Name": "AadityaA" } ],
+    "Category": "Wallpaper",
+    "Dependencies": [],
+    "EnabledByDefault": true,
+    "X-Plasma-MainScript": "ui/main.qml",
+    "X-Plasma-ConfigUi": "ui/config.qml"
+  }
+}

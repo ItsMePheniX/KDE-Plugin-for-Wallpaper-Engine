@@ -1,0 +1,4 @@
+set(__QT_DEPLOY_TARGET_wallpaperengineplugin_FILE /home/AadityaA/workspace/projects/KDE Plugin for Wallpaper Engine/build/libwallpaperengineplugin.so)
+set(__QT_DEPLOY_TARGET_wallpaperengineplugin_TYPE SHARED_LIBRARY)
+set(__QT_DEPLOY_TARGET_wallpaperengine_tests_FILE /home/AadityaA/workspace/projects/KDE Plugin for Wallpaper Engine/build/wallpaperengine_tests)
+set(__QT_DEPLOY_TARGET_wallpaperengine_tests_TYPE EXECUTABLE)

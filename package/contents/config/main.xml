@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0 http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
+  <kcfgfile name="wallpaperenginekde" />
+  <group name="General">
+    <entry name="projectPath" type="String">
+      <label>Selected Wallpaper Engine project directory</label>
+      <default></default>
+    </entry>
+    <entry name="videoPath" type="String">
+      <label>Selected video file path</label>
+      <default></default>
+    </entry>
+    <entry name="scaleMode" type="String">
+      <label>Video scaling mode</label>
+      <default>cover</default>
+    </entry>
+  </group>
+</kcfg>
