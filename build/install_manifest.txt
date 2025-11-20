@@ -1,6 +1,0 @@
-/home/AadityaA/.local/qml/WallpaperEngine/libwallpaperengineplugin.so
-/home/AadityaA/.local/qml/WallpaperEngine/qmldir
-/home/AadityaA/.local/share/plasma/wallpapers/org.kde.wallpaper.wallpaperengine/contents/config/main.xml
-/home/AadityaA/.local/share/plasma/wallpapers/org.kde.wallpaper.wallpaperengine/contents/ui/main.qml
-/home/AadityaA/.local/share/plasma/wallpapers/org.kde.wallpaper.wallpaperengine/contents/ui/config.qml
-/home/AadityaA/.local/share/plasma/wallpapers/org.kde.wallpaper.wallpaperengine/metadata.json
