@@ -18,6 +18,7 @@ private slots:
     void test_missingProjectJson_skipped();
     void test_missingVideoFile_skipped();
     void test_previewDetection_optional();
+    void test_realSteamPath();
 };
 
 void WeModelTest::test_validVideoProject_listsOne() {
@@ -117,6 +118,39 @@ void WeModelTest::test_previewDetection_optional() {
     const auto idx = model.index(0, 0);
     const QString preview = model.data(idx, WallpaperEngineModel::PreviewPathRole).toString();
     QVERIFY(preview.endsWith("preview.png"));
+}
+
+void WeModelTest::test_realSteamPath() {
+    const QString steamPath = QDir::homePath() + "/.local/share/Steam/steamapps/workshop/content/431960";
+    QDir steamDir(steamPath);
+    
+    if (!steamDir.exists()) {
+        QSKIP("Steam workshop path doesn't exist, skipping real path test");
+    }
+    
+    qDebug() << "===== REAL STEAM PATH TEST =====";
+    qDebug() << "Testing path:" << steamPath;
+    qDebug() << "Path exists:" << steamDir.exists();
+    
+    WallpaperEngineModel model;
+    model.useDefaultSteamPath();
+    
+    qDebug() << "Model root path:" << model.rootPath();
+    qDebug() << "Model pathExists:" << model.pathExists();
+    qDebug() << "Model count:" << model.count();
+    qDebug() << "Model lastError:" << model.lastError();
+    
+    QVERIFY2(model.pathExists(), "Steam workshop path should exist");
+    QVERIFY2(model.count() > 0, qPrintable(QString("Should find at least one project. Error: %1").arg(model.lastError())));
+    
+    // Print first 3 projects
+    for (int i = 0; i < qMin(3, model.count()); i++) {
+        auto idx = model.index(i, 0);
+        qDebug() << "Project" << i << ":"
+                 << model.data(idx, WallpaperEngineModel::TitleRole).toString()
+                 << "by" << model.data(idx, WallpaperEngineModel::AuthorRole).toString();
+        qDebug() << "  Video:" << model.data(idx, WallpaperEngineModel::VideoPathRole).toString();
+    }
 }
 
 QTEST_APPLESS_MAIN(WeModelTest)

@@ -32,7 +32,9 @@ ui_*.h
 *.exe
 
 # IDE and editor files
-.vscode/
+.vscode/*
+!.vscode/c_cpp_properties.json
+!.vscode/settings.json
 .idea/
 *.pro.user
 *.pro.user.*
@@ -41,9 +43,11 @@ ui_*.h
 *~
 .DS_Store
 
-# Test binaries
+# Test binaries and temp test files
 *_tests
 wallpaperengine_tests
+tests/manual_test.cpp
+tests/temp_*.cpp
 
 # Qt Creator files
 *.autosave

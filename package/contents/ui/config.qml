@@ -5,117 +5,196 @@ import WallpaperEngine 1.0
 
 Item {
     id: configRoot
-    width: 800; height: 600
+    width: 800
+    height: 600
 
-    // Explicit default path (avoid HOME expansion issues in QML binding)
-    property string defaultRoot: "/home/AadityaA/.local/share/Steam/steamapps/workshop/content/431960"
+    // Debug flag - set to true to enable console logging
+    readonly property bool debugMode: false
+    
+    function debug(message) {
+        if (debugMode) console.log("[WE Config]", message)
+    }
+
+    property string steamPath: "/home/AadityaA/.local/share/Steam/steamapps/workshop/content/431960"
+    
+    property string selectedVideoPath: ""
+    property string selectedProjectPath: ""
+
+    Component.onCompleted: {
+        // Load previously saved configuration
+        if (wallpaper && wallpaper.configuration) {
+            selectedVideoPath = wallpaper.configuration.videoPath || ""
+            selectedProjectPath = wallpaper.configuration.projectPath || ""
+            debug("Loaded config - videoPath: " + selectedVideoPath)
+        }
+    }
 
     WallpaperEngineModel {
         id: weModel
-        Component.onCompleted: useDefaultSteamPath()
+        Component.onCompleted: {
+            useDefaultSteamPath()
+            debug("Model loaded - found " + count + " wallpapers, pathExists: " + pathExists)
+        }
+        onCountChanged: {
+            debug("Wallpaper count changed to: " + count)
+        }
     }
 
-    readonly property string defaultRootResolved: defaultRoot
-
-    ColumnLayout {
+    Rectangle {
         anchors.fill: parent
-        spacing: 8
-        Label { text: "Wallpaper Engine Plugin"; font.bold: true; color: "#ddd" }
-        Label { text: "If no projects appear, ensure videos exist under the hardcoded Steam path."; wrapMode: Text.Wrap; color: "#999" }
-        Frame {
-            Layout.fillWidth: true
-            background: Rectangle { color: "#222"; radius: 4 }
-            Label { text: "Steam workshop path: " + defaultRootResolved; color: "#ccc"; wrapMode: Text.Wrap; anchors.margins: 6; anchors.fill: parent }
-        }
-        // Status / error messages
-        Loader {
-            Layout.fillWidth: true
-            sourceComponent: weModel.lastError.length ? errorBox : (weModel.pathExists && weModel.count === 0 ? emptyBox : null)
-        }
-        Component {
-            id: errorBox
-            Frame { width: parent.width; background: Rectangle { color: "#552222"; radius: 4 }
-                Label { text: "Error: " + weModel.lastError; color: "#ffcccc"; wrapMode: Text.Wrap }
+        color: "#2a2a2a"
+
+        ColumnLayout {
+            anchors.fill: parent
+            anchors.margins: 20
+            spacing: 15
+
+            Label {
+                text: "Wallpaper Engine Plugin"
+                font.bold: true
+                font.pixelSize: 20
+                color: "#ffffff"
             }
-        }
-        Component {
-            id: emptyBox
-            Frame { width: parent.width; background: Rectangle { color: "#333333"; radius: 4 }
-                Label { text: "No Wallpaper Engine video projects found here."; color: "#cccccc"; wrapMode: Text.Wrap }
+
+            Rectangle {
+                Layout.fillWidth: true
+                height: 100
+                color: "#3a3a3a"
+                radius: 8
+                border.color: "#555"
+                border.width: 2
+
+                ColumnLayout {
+                    anchors.fill: parent
+                    anchors.margins: 15
+                    spacing: 8
+
+                    Label {
+                        text: "Steam Workshop Path:"
+                        font.bold: true
+                        font.pixelSize: 14
+                        color: "#cccccc"
+                    }
+
+                    Label {
+                        text: steamPath
+                        font.family: "monospace"
+                        font.pixelSize: 13
+                        color: "#4fc3f7"
+                        Layout.fillWidth: true
+                        wrapMode: Text.Wrap
+                    }
+                }
             }
-        }
-        ScrollView {
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            clip: true
-            
-            Grid {
-                id: grid
-                columns: 4
-                spacing: 8
-                width: parent.width
-                
-                Repeater {
-                    model: weModel
-                    delegate: Rectangle {
-                        width: 160
-                        height: 120
-                        color: {
-                            if (typeof wallpaper !== 'undefined' && wallpaper.configuration.projectPath === projectPath) {
-                                return "#4477aa"
-                            }
-                            return "#333"
-                        }
-                        radius: 4
-                        border.color: "#555"
-                        border.width: 1
-                        
-                        Column {
-                            anchors.fill: parent
-                            anchors.margins: 6
-                            spacing: 4
-                            
-                            Image {
-                                source: previewPath && previewPath.length > 0 ? "file://" + previewPath : ""
-                                fillMode: Image.PreserveAspectFit
-                                asynchronous: true
-                                width: parent.width
-                                height: 70
-                                
-                                Rectangle {
-                                    anchors.fill: parent
-                                    color: "#222"
-                                    visible: parent.status !== Image.Ready
-                                    Text {
-                                        anchors.centerIn: parent
-                                        text: "No Preview"
-                                        color: "#666"
-                                        font.pixelSize: 10
+
+            Rectangle {
+                Layout.fillWidth: true
+                height: 80
+                color: weModel.pathExists ? "#1b5e20" : "#b71c1c"
+                radius: 8
+
+                ColumnLayout {
+                    anchors.centerIn: parent
+                    spacing: 8
+
+                    Label {
+                        text: weModel.pathExists ? "✓ Path Exists" : "✗ Path Not Found"
+                        font.bold: true
+                        font.pixelSize: 16
+                        color: "#ffffff"
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+
+                    Label {
+                        text: "Found " + weModel.count + " video wallpaper(s)"
+                        font.pixelSize: 14
+                        color: "#ffffff"
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
+                }
+            }
+
+            Label {
+                text: "Select a wallpaper:"
+                font.bold: true
+                font.pixelSize: 14
+                color: "#cccccc"
+            }
+
+            ScrollView {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                clip: true
+
+                Grid {
+                    columns: 4
+                    spacing: 10
+                    width: parent.width - 20
+
+                    Repeater {
+                        model: weModel
+                        delegate: Rectangle {
+                            width: 170
+                            height: 130
+                            color: selectedVideoPath === videoPath ? "#0d47a1" : "#3a3a3a"
+                            radius: 6
+                            border.color: "#555"
+                            border.width: 2
+
+                            Column {
+                                anchors.fill: parent
+                                anchors.margins: 8
+                                spacing: 6
+
+                                Image {
+                                    source: previewPath && previewPath.length > 0 ? "file://" + previewPath : ""
+                                    fillMode: Image.PreserveAspectFit
+                                    asynchronous: true
+                                    width: parent.width
+                                    height: 80
+
+                                    Rectangle {
+                                        anchors.fill: parent
+                                        color: "#222"
+                                        visible: parent.status !== Image.Ready
+                                        z: -1
+                                        
+                                        Label {
+                                            anchors.centerIn: parent
+                                            text: "No Preview"
+                                            color: "#666"
+                                            font.pixelSize: 10
+                                        }
                                     }
                                 }
+
+                                Label {
+                                    text: title || "Untitled"
+                                    color: "white"
+                                    elide: Text.ElideRight
+                                    width: parent.width
+                                    font.pixelSize: 12
+                                    font.bold: true
+                                }
+
+                                Label {
+                                    text: author || "Unknown"
+                                    color: "#aaaaaa"
+                                    font.pixelSize: 10
+                                    elide: Text.ElideRight
+                                    width: parent.width
+                                }
                             }
-                            
-                            Text {
-                                text: title || "Untitled"
-                                color: "white"
-                                elide: Text.ElideRight
-                                width: parent.width
-                                font.pixelSize: 12
-                            }
-                            
-                            Text {
-                                text: author || "Unknown"
-                                color: "#bbb"
-                                font.pixelSize: 9
-                                elide: Text.ElideRight
-                                width: parent.width
-                            }
-                        }
-                        
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: {
-                                if (typeof wallpaper !== 'undefined') {
+
+                            MouseArea {
+                                anchors.fill: parent
+                                cursorShape: Qt.PointingHandCursor
+                                onClicked: {
+                                    debug("Selected wallpaper: " + title + " (" + videoPath + ")")
+                                    selectedProjectPath = projectPath
+                                    selectedVideoPath = videoPath
+                                    
+                                    // Save to Plasma configuration
                                     wallpaper.configuration.projectPath = projectPath
                                     wallpaper.configuration.videoPath = videoPath
                                 }
@@ -124,20 +203,29 @@ Item {
                     }
                 }
             }
-        }
-        RowLayout {
-            Layout.fillWidth: true
-            ComboBox {
-                id: scaleBox
-                model: ["cover","contain","stretch"]
-                onCurrentTextChanged: wallpaper.configuration.scaleMode = currentText
-                Component.onCompleted: currentIndex = model.indexOf(wallpaper.configuration.scaleMode || "cover")
+
+            RowLayout {
+                Layout.fillWidth: true
+                spacing: 10
+
+                Label {
+                    text: "Scale mode:"
+                    color: "#cccccc"
+                }
+
+                ComboBox {
+                    id: scaleBox
+                    model: ["cover", "contain", "stretch"]
+                    currentIndex: 0
+                }
+
+                Item { Layout.fillWidth: true }
+
+                Button {
+                    text: "Reload"
+                    onClicked: weModel.reload()
+                }
             }
-            Button {
-                text: "Reload"
-                onClicked: weModel.reload()
-            }
-            Label { text: weModel.count + " projects"; color: weModel.count ? "#aaa" : "#ff8888" }
         }
     }
 }

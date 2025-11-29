@@ -21,11 +21,24 @@ package/
   contents/ui/config.qml        # Configuration UI
 ```
 
-## Build (Example)
+## Build & Install
 ```bash
+# Configure and build
 mkdir -p build && cd build
 cmake -DCMAKE_INSTALL_PREFIX=$HOME/.local ..
-cmake --build . --target install -j
+cmake --build . -j
+
+# Install (requires sudo for system QML path)
+sudo cmake --install .
+
+# Restart plasmashell
+killall plasmashell && plasmashell &
+```
+
+## Uninstall
+```bash
+cd build
+cmake --build . --target uninstall
 ```
 
 After install, Plasma should detect the wallpaper under:

@@ -3,14 +3,13 @@
   "KPlugin": {
     "Id": "org.kde.wallpaper.wallpaperengine",
     "Name": "Wallpaper Engine",
-    "Description": "Play Wallpaper Engine video wallpapers (prototype)",
+    "Description": "Play Wallpaper Engine video wallpapers",
     "Version": "0.1.0",
     "License": "GPL-3.0-or-later",
     "Authors": [ { "Name": "AadityaA" } ],
-    "Category": "Wallpaper",
-    "Dependencies": [],
-    "EnabledByDefault": true,
-    "X-Plasma-MainScript": "ui/main.qml",
-    "X-Plasma-ConfigUi": "ui/config.qml"
-  }
+    "Category": "",
+    "Icon": "preferences-desktop-wallpaper",
+    "Website": "https://github.com/ItsMePheniX/KDE-Plugin-for-Wallpaper-Engine"
+  },
+  "X-KDE-ParentApp": "org.kde.plasmashell"
 }
