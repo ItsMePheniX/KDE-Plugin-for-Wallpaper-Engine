@@ -47,6 +47,7 @@ After install, Plasma should detect the wallpaper under:
 Select it in the wallpaper configuration dialog; choose a project.
 
 ## Notes
+- Path to the video files is hard code.
 - Only video-type projects are listed. Others skipped.
 - No copying/import; references workshop directory in place.
 - Audio is always muted.
