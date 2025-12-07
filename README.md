@@ -53,5 +53,11 @@ Select it in the wallpaper configuration dialog; choose a project.
 - Audio is always muted.
 - Future work: multi-monitor support, imports, performance optimizations.
 
+## Demo
+IMPROVE THE UI!!!!
+![Image of bmw n desktop folder settings](/images/SS.png)
+
+
+
 ## License
 GPL-3.0-or-later (prototype stage).
