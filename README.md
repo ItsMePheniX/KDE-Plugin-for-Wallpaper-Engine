@@ -1,6 +1,8 @@
-# Wallpaper Engine KDE Prototype (WORK IN PROGRESS)
+# Wallpaper Engine KDE (PROTOTYPE)
 
 Prototype Plasma 6 wallpaper plugin to load and play Wallpaper Engine *video* wallpapers directly from the Steam workshop directory.
+> **Note:** This is a **personal project** created for my own Arch Linux setup.  
+> Others may try it if they want, but expect rough edges and no guaranteed support.
 
 ## Features (Milestone 1)
 - Scan default Steam workshop path: `~/.local/share/Steam/steamapps/workshop/content/431960/`
