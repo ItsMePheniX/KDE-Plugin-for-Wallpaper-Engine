@@ -63,3 +63,6 @@ IMPROVE THE UI!!!!
 
 ## License
 GPL-3.0-or-later (prototype stage).
+
+## Accepting changes
+Hail Teja!
